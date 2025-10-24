@@ -1,0 +1,9 @@
+[
+  {"id":"1","title":"Pico Nevado","author":"Ana","url":"https://picsum.photos/id/1003/800/600","thumb":"https://picsum.photos/id/1003/400/300","tags":["montanha","neve","paisagem"],"createdAt":"2024-10-01T10:00:00Z"},
+  {"id":"2","title":"Cidade à Noite","author":"Bruno","url":"https://picsum.photos/id/1011/800/600","thumb":"https://picsum.photos/id/1011/400/300","tags":["cidade","noite"],"createdAt":"2024-09-20T12:00:00Z"},
+  {"id":"3","title":"Floresta Úmida","author":"Carla","url":"https://picsum.photos/id/102/800/600","thumb":"https://picsum.photos/id/102/400/300","tags":["floresta","natureza"],"createdAt":"2024-09-10T08:30:00Z"},
+  {"id":"4","title":"Estrada Deserta","author":"Diego","url":"https://picsum.photos/id/103/800/600","thumb":"https://picsum.photos/id/103/400/300","tags":["estrada","asfalto","viagem"],"createdAt":"2024-08-28T09:15:00Z"},
+  {"id":"5","title":"Praia Azul","author":"Eva","url":"https://picsum.photos/id/104/800/600","thumb":"https://picsum.photos/id/104/400/300","tags":["praia","mar","céu"],"createdAt":"2024-08-05T14:10:00Z"},
+  {"id":"6","title":"Campo Dourado","author":"Felipe","url":"https://picsum.photos/id/106/800/600","thumb":"https://picsum.photos/id/106/400/300","tags":["campo","grama","por-do-sol"],"createdAt":"2024-07-23T17:45:00Z"}
+]
+

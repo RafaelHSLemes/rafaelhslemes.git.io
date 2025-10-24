@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ispicus-api
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/ispicus
+
+ispicus:
+  jwt:
+    secret: change-this-secret
+    expires: PT15M
+    refreshExpires: P7D
+  upload:
+    provider: cloudinary # s3|cloudinary
+    s3:
+      bucket: your-bucket
+      region: your-region
+      accessKey: YOUR_KEY
+      secretKey: YOUR_SECRET
+    cloudinary:
+      url: cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+
