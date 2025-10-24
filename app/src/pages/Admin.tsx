@@ -5,6 +5,7 @@ import ChatWindow from '../components/ChatWindow'
 import Composer from '../components/Composer'
 import Metrics from '../components/Metrics'
 import { db, supabase } from '../lib/supabaseClient'
+import { subscribeToMessages } from '../lib/realtime'
 import type { Message } from '../lib/realtime'
 
 type Conversation = { id: string; created_at: string; visitor_id: string | null; last_event_at: string | null; status: 'open' | 'closed'; email: string | null }
@@ -36,6 +37,15 @@ export default function Admin() {
     const { data } = await db().from('messages').select('*').eq('conversation_id', id).order('created_at', { ascending: true })
     setMessages((data || []) as Message[])
   }
+
+  // Realtime: subscribe to new messages while a conversation is open
+  useEffect(() => {
+    if (!activeId) return
+    const unsub = subscribeToMessages(activeId, (m) => {
+      setMessages((prev) => [...prev, m])
+    })
+    return () => unsub()
+  }, [activeId])
 
   async function sendAdmin(text: string) {
     if (!activeId) return

@@ -14,7 +14,8 @@ function uuidv4() {
 
 export default function ChatWidget() {
   const supabaseConfigured = Boolean(import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY)
-  const [open, setOpen] = useState(false)
+  const initialOpen = new URL(window.location.href).searchParams.get('open') === '1'
+  const [open, setOpen] = useState(initialOpen)
   const [visitorId] = useState(() => {
     const k = 'visitor_id'
     const v = localStorage.getItem(k)
