@@ -1,11 +1,11 @@
-# OS
-Thumbs.db
+node_modules/
+dist/
 .DS_Store
-
-# IDE
-.idea/
-.vscode/
-
-# Java/Maven build outputs (ignore all targets)
-**/target/
+*.local
+.env
+app/.env
+app/.vite
+app/node_modules/
+app/dist/
+supabase/.temp
 
