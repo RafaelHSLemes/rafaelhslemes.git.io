@@ -1,0 +1,42 @@
+:root {
+  --bg: #111827;
+  --surface: #111827;
+  --panel: #0b1224;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --todo: #3b82f6;
+  --doing: #f59e0b;
+  --done: #10b981;
+  --line: rgba(229,231,235,.12);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background: var(--bg); color: var(--text); }
+
+.bar { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-bottom: 1px solid var(--line); background: #0f172a; position: sticky; top: 0; z-index: 10; }
+.bar .hint { color: var(--muted); font-size: .9rem; }
+
+.board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 12px; height: calc(100vh - 48px); }
+.col { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.col h2 { margin: 0; padding: 10px 12px; font-size: .95rem; letter-spacing: .5px; border-bottom: 1px solid var(--line); }
+.col[data-status="TODO"] h2 { color: var(--todo); }
+.col[data-status="DOING"] h2 { color: var(--doing); }
+.col[data-status="DONE"] h2 { color: var(--done); }
+
+.list { flex: 1; overflow: auto; padding: 10px; display: grid; gap: 8px; align-content: start; }
+.card { background: #111827; border: 1px solid var(--line); border-radius: 10px; padding: 10px; cursor: grab; }
+.card:active { cursor: grabbing; }
+.meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--muted); font-size: .8rem; margin-top: 6px; }
+.actions { display: inline-flex; gap: 6px; }
+.btn { background: transparent; color: var(--muted); border: 1px solid var(--line); border-radius: 8px; padding: 2px 8px; cursor: pointer; }
+.btn:hover { color: var(--text); border-color: var(--text); }
+
+.new { display: flex; gap: 6px; padding: 10px; border-top: 1px solid var(--line); }
+.new input { flex: 1; background: #0f172a; color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px; }
+.new button { background: var(--todo); color: white; border: 0; border-radius: 8px; padding: 8px 10px; cursor: pointer; }
+.new button:hover { filter: brightness(1.05); }
+
+.drop-target { outline: 2px dashed var(--muted); outline-offset: -6px; }
+
+@media (max-width: 900px) { .board { grid-template-columns: 1fr; height: auto; min-height: 100vh; } }
+

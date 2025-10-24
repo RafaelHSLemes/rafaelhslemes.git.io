@@ -1,12 +1,10 @@
 [
   {
     "id": "SargentTasks",
-    "title": "SargentTasks — Catálogo de Tarefas (Kanban)",
-    "description": "Kanban simples em Java (Spring Boot + PostgreSQL + Thymeleaf). CRUD com validação, filtros por status, paginação, DTOs com MapStruct e migrações com Flyway.",
-    "link": "projects/SargentTasks/",
-    "repo": "https://github.com/rafaelhslemes/rafaelhslemes.git.io/tree/main/projects/SargentTasks",
-    "tags": ["Java", "Spring Boot", "PostgreSQL", "Thymeleaf", "Docker"],
+    "title": "SargentTasks — Kanban Interativo",
+    "description": "Demonstração interativa de um board Kanban (TODO, DOING, DONE) com criação e movimentação de tarefas no navegador.",
+    "embed": "projects/SargentTasks/interactive/index.html",
+    "tags": ["Java", "Spring Boot", "UI Demo", "Kanban"],
     "image": null
   }
 ]
-

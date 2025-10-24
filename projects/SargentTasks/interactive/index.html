@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SargentTasks • Demo Kanban</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="bar">
+      <strong>Demo Kanban</strong>
+      <span class="hint">Arraste tarefas entre colunas. Os dados ficam no seu navegador.</span>
+    </header>
+    <main class="board">
+      <section class="col" data-status="TODO">
+        <h2>TODO</h2>
+        <div class="list" id="list-todo"></div>
+        <form class="new" id="form-todo" autocomplete="off">
+          <input type="text" name="title" placeholder="Nova tarefa…" required />
+          <button type="submit">Adicionar</button>
+        </form>
+      </section>
+      <section class="col" data-status="DOING">
+        <h2>DOING</h2>
+        <div class="list" id="list-doing"></div>
+      </section>
+      <section class="col" data-status="DONE">
+        <h2>DONE</h2>
+        <div class="list" id="list-done"></div>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+  </html>
+

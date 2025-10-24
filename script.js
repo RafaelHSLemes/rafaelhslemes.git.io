@@ -42,7 +42,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   });
 })();
 
-// Load projects manifest and build tabs/panels
+// Load projects manifest and build tabs/panels as interactive embeds
 (async function loadProjects() {
   const tabs = document.getElementById('projectTabs');
   const panels = document.getElementById('projectPanels');
@@ -75,55 +75,41 @@ document.getElementById('year').textContent = new Date().getFullYear();
       h3.className = 'project-title';
       h3.textContent = proj.title || proj.id || `Projeto ${idx+1}`;
 
+      // Actions: only demo-related (no repo/README links)
       const actions = document.createElement('div');
       actions.className = 'project-actions';
-      if (proj.link) {
-        const view = document.createElement('a');
-        view.href = proj.link;
-        view.target = '_blank';
-        view.rel = 'noopener';
-        view.className = 'btn';
-        view.textContent = 'Abrir';
-        actions.appendChild(view);
-      }
-      if (proj.repo) {
-        const repo = document.createElement('a');
-        repo.href = proj.repo;
-        repo.target = '_blank';
-        repo.rel = 'noopener';
-        repo.className = 'btn';
-        repo.textContent = 'Repositório';
-        actions.appendChild(repo);
-      }
-      const cta = document.createElement('a');
-      cta.href = proj.link || proj.repo || '#';
-      cta.target = proj.link || proj.repo ? '_blank' : '';
-      cta.rel = 'noopener';
-      cta.className = 'btn cta';
-      cta.textContent = 'Ver projeto';
-      actions.appendChild(cta);
+      const openNew = document.createElement('a');
+      openNew.className = 'btn';
+      openNew.textContent = 'Abrir em nova aba';
+      const fullscreen = document.createElement('button');
+      fullscreen.className = 'btn';
+      fullscreen.type = 'button';
+      fullscreen.textContent = 'Tela cheia';
+      actions.appendChild(openNew);
+      actions.appendChild(fullscreen);
 
       header.appendChild(h3);
       header.appendChild(actions);
       panel.appendChild(header);
 
-      if (proj.image) {
-        const img = document.createElement('img');
-        img.src = proj.image;
-        img.alt = proj.title ? `Imagem do projeto ${proj.title}` : 'Imagem do projeto';
-        img.style.maxWidth = '100%';
-        img.style.border = '1px solid var(--line)';
-        img.style.borderRadius = '12px';
-        img.style.margin = '8px 0';
-        panel.appendChild(img);
-      }
+      // Embed area
+      const embedWrap = document.createElement('div');
+      embedWrap.className = 'embed-wrap';
+      const frame = document.createElement('iframe');
+      frame.className = 'embed-frame';
+      frame.setAttribute('title', proj.title || 'Projeto interativo');
+      frame.setAttribute('loading', 'lazy');
+      if (proj.embed) frame.src = proj.embed;
+      embedWrap.appendChild(frame);
+      panel.appendChild(embedWrap);
 
+      // Optional description and tags (kept minimal; no README link)
       if (proj.description) {
         const p = document.createElement('p');
+        p.className = 'muted';
         p.textContent = proj.description;
         panel.appendChild(p);
       }
-
       if (Array.isArray(proj.tags) && proj.tags.length) {
         const tags = document.createElement('div');
         tags.className = 'tags';
@@ -144,6 +130,24 @@ document.getElementById('year').textContent = new Date().getFullYear();
         tab.classList.add('is-active');
         panel.classList.add('is-active');
       });
+
+      // Wire actions
+      openNew.addEventListener('click', () => {
+        if (proj.embed) window.open(proj.embed, '_blank', 'noopener');
+      });
+      fullscreen.addEventListener('click', () => {
+        if (!proj.embed) return;
+        const overlay = document.createElement('div');
+        overlay.className = 'embed-overlay';
+        overlay.innerHTML = `\n          <div class="embed-modal">\n            <div class="embed-modal-bar">\n              <strong>${(proj.title||'Projeto')}</strong>\n              <button class="btn" type="button" data-close>Fechar</button>\n            </div>\n            <iframe class="embed-frame-full" src="${proj.embed}" title="${(proj.title||'Projeto interativo')}" loading="lazy"></iframe>\n          </div>`;
+        overlay.addEventListener('click', (ev) => {
+          const target = ev.target;
+          if (target === overlay || (target instanceof HTMLElement && target.dataset.close !== undefined)) {
+            document.body.removeChild(overlay);
+          }
+        });
+        document.body.appendChild(overlay);
+      });
     });
   } catch (e) {
     const fallback = document.createElement('p');
@@ -152,4 +156,3 @@ document.getElementById('year').textContent = new Date().getFullYear();
     panels?.appendChild(fallback);
   }
 })();
-
