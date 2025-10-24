@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MotivaDev - DevQuotes Demo</title>
+    <meta name="description" content="Demo estatica do DevQuotes: frases motivacionais de programadores com animacoes e compartilhamento." />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="bar">
+      <strong>DevQuotes</strong>
+      <span class="hint">Gere uma nova frase. Fallback local no GitHub Pages.</span>
+    </header>
+    <main class="wrap">
+      <section class="card">
+        <blockquote class="quote">
+          <p id="text">Clique em "Nova frase" para comecar.</p>
+          <cite id="author"></cite>
+        </blockquote>
+        <div class="actions">
+          <button id="btn-next" class="btn cta" type="button">Nova frase</button>
+          <button id="btn-x" class="btn" type="button">Compartilhar no X</button>
+          <button id="btn-li" class="btn" type="button">Compartilhar no LinkedIn</button>
+        </div>
+        <div id="status" class="status">Pronto</div>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+  </html>
+
