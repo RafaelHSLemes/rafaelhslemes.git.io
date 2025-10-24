@@ -8,6 +8,10 @@ import Login from './pages/Login'
 import ChatWidget from './components/ChatWidget'
 
 function App() {
+  const embedOnly = new URL(window.location.href).searchParams.get('embed') === '1'
+  if (embedOnly) {
+    return <ChatWidget />
+  }
   return (
     <HashRouter>
       <Routes>
