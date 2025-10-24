@@ -8,6 +8,7 @@ Este monorepo entrega um chat público para seu portfólio, com painel admin pro
 - `supabase/functions/notify-new-message` — envia e-mail ao admin com debounce
 - `supabase/functions/admin-reply` — valida admin, posta resposta e notifica
 - `supabase/functions/issue-visitor-token` — emite JWT curto com claim `visitor_id` (necessário p/ RLS por visitante)
+- `supabase/functions/transcript-digest` — envia transcrição a cada N minutos (cron)
 
 ## Requisitos
 - Supabase (Postgres + Realtime + Auth GitHub)
@@ -38,7 +39,11 @@ No projeto Supabase (Edge Functions):
 3) Deploy das Edge Functions e envs
 - Instale `supabase` CLI localmente.
 - Configure as envs das funções: `supabase functions secrets set ...`
-- Publique funções: `supabase functions deploy notify-new-message`, `admin-reply`, `issue-visitor-token`.
+- Publique funções: `supabase functions deploy notify-new-message`, `admin-reply`, `issue-visitor-token`, `transcript-digest`.
+- (Opcional) Agende digest a cada 5 min em Functions → Schedules (ou CLI):
+  - Cron: `*/5 * * * *`
+  - Target: `transcript-digest`
+  - Envs exigidos: `RESEND_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_EMAIL_DESTINATION` e opcional `DIGEST_WINDOW_MINUTES`.
 
 4) Configurar Resend
 - Verifique domínio, configure DKIM e obtenha `RESEND_API_KEY`.
@@ -79,4 +84,3 @@ Observação: Supabase não inclui `visitor_id` por padrão no JWT anônimo; por
 - Realtime: inscrição em `postgres_changes` na tabela `messages` filtrando por `conversation_id`.
 - Rate limit: front faz throttle (1 msg/2s). Edge functions validam bursts e captcha quando necessário.
 - Sanitização: renderização escapa texto; links com `rel=\"noopener noreferrer\"`.
-
