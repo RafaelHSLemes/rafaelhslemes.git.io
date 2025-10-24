@@ -14,5 +14,13 @@
     "embed": "projects/MotivaDev/interactive/index.html",
     "tags": ["React", "Node", "Spring Boot", "API", "UI Demo"],
     "image": null
+  },
+  {
+    "id": "IsPicUs",
+    "title": "IsPicUs",
+    "description": "IsPicUs: portfolio de imagens com modo visitante em GitHub Pages (React via CDN), filtros, tema claro/escuro e carrossel. Integra com API real quando configurada; backends Node/Express e Spring Boot oferecem JWT, perfis e upload para S3/Cloudinary.",
+    "embed": "projects/IsPicUs/docs/index.html",
+    "tags": ["React", "JWT", "Upload", "Node", "Spring Boot"],
+    "image": null
   }
 ]
