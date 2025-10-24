@@ -13,6 +13,7 @@ function uuidv4() {
 }
 
 export default function ChatWidget() {
+  const supabaseConfigured = Boolean(import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY)
   const [open, setOpen] = useState(false)
   const [visitorId] = useState(() => {
     const k = 'visitor_id'
@@ -107,6 +108,11 @@ export default function ChatWidget() {
               <div className="font-medium">Fale comigo</div>
               <button className="text-sm px-2 py-1 rounded border" onClick={() => setOpen(false)} aria-label="Minimizar chat">–</button>
             </div>
+            {!supabaseConfigured && (
+              <div className="p-3 text-sm text-red-600 dark:text-red-400 border-b border-zinc-200 dark:border-zinc-800">
+                Configuração necessária: defina VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY e re‑publique.
+              </div>
+            )}
             <div className="p-2 border-b border-zinc-200 dark:border-zinc-800 flex items-center gap-2">
               <input
                 type="email"
@@ -137,4 +143,3 @@ export default function ChatWidget() {
     </div>
   )
 }
-
