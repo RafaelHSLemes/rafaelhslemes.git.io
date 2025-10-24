@@ -5,6 +5,7 @@ import './styles/global.css'
 import Home from './pages/Home'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
+import ChatWidget from './components/ChatWidget'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <ChatWidget />
     </HashRouter>
   )
 }
@@ -24,4 +26,3 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </React.StrictMode>
 )
-
