@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfólio • Rafael H S Lemes</title>
+    <meta name="description" content="Portfólio de Rafael H S Lemes — Full-Stack Developer." />
+    <link rel="preload" href="assets/profilepic.png" as="image" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">@rafaelhslemes</div>
+      <button id="themeToggle" class="theme-toggle" aria-label="Alternar tema" title="Alternar tema">
+        <span class="icon" aria-hidden="true">🌙</span>
+        <span class="label">Tema</span>
+      </button>
+    </header>
+
+    <main class="layout">
+      <aside class="profile">
+        <img class="avatar" src="assets/profilepic.png" alt="Foto de perfil de Rafael" />
+        <h1 class="name">Rafael H S Lemes</h1>
+        <p class="role">Full‑Stack Developer</p>
+        <div class="badges">
+          <span class="badge">Java • Spring Boot</span>
+          <span class="badge">TypeScript • MERN</span>
+        </div>
+        <nav class="social">
+          <a href="https://github.com/RafaelHSLemes" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
+          <a href="mailto:rafaelhslemes@gmail.com" aria-label="Email">Email</a>
+        </nav>
+      </aside>
+
+      <section class="content">
+        <nav class="tabs" role="tablist" aria-label="Sessões do portfólio">
+          <button role="tab" aria-selected="true" aria-controls="tab-sobre" id="tabbtn-sobre" class="tab-btn is-active">Sobre mim</button>
+          <button role="tab" aria-selected="false" aria-controls="tab-projetos" id="tabbtn-projetos" class="tab-btn">Projetos</button>
+        </nav>
+
+        <section id="tab-sobre" role="tabpanel" aria-labelledby="tabbtn-sobre" class="tab-panel is-active">
+          <article class="card">
+            <h2>Sobre mim</h2>
+            <p>
+              Since childhood, I&#39;ve been fascinated by people who can turn ideas into impact. When I was ten, watching The Social Network with my father, I realized something that shaped my path: the power of knowledge and technology to change the world. That moment sparked a desire to master logic, understand systems, and build something meaningful, not through chaos, but through creation.
+            </p>
+            <p>
+              Today, that ambition has become my purpose. I&#39;m a Full-Stack Developer since 2023, programming in Java (Spring Boot) and TypeScript using the MERN stack (MongoDB, Express, React, Node.js).
+              In recent years, I&#39;ve built systems that connect technology and strategy, including Isteel, a modular platform integrating clients, metalworkers, and drivers, and ForBra, a geolocation-based app with JWT authentication designed to connect Brazilians abroad.
+              I&#39;m driven by curiosity, purpose, and innovation, because every line of code has the potential to create lasting impact.
+            </p>
+          </article>
+        </section>
+
+        <section id="tab-projetos" role="tabpanel" aria-labelledby="tabbtn-projetos" class="tab-panel">
+          <article class="card">
+            <div class="projects">
+              <div class="projects-header">
+                <h2>Projetos</h2>
+                <p class="muted">Selecione um projeto nas abas abaixo.</p>
+              </div>
+              <div class="project-tabs" role="tablist" aria-label="Projetos" id="projectTabs">
+                <!-- Abas de projetos inseridas via JS -->
+              </div>
+              <div class="project-panels" id="projectPanels">
+                <!-- Painéis de projeto inseridos via JS -->
+              </div>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <small>© <span id="year"></span> Rafael H S Lemes. Todos os direitos reservados.</small>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+  </html>
+
