@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kanban - Tasks</title>
+    <style>
+        body { font-family: system-ui, Arial, sans-serif; margin: 0; padding: 1rem; background: #f6f7fb; }
+        h1 { margin-bottom: 1rem; }
+        .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .col { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: .75rem; min-height: 300px; }
+        .col h2 { font-size: 1rem; margin: 0 0 .5rem 0; color: #374151; }
+        .task { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: .5rem .6rem; margin-bottom: .5rem; }
+        .muted { color: #6b7280; font-size: .85rem; }
+        form.create { display: grid; gap: .5rem; margin-bottom: 1rem; }
+        input, textarea, select { width: 100%; padding: .5rem; border: 1px solid #d1d5db; border-radius: 6px; }
+        button { background: #111827; color: #fff; border: none; padding: .5rem .8rem; border-radius: 6px; cursor: pointer; }
+        .row { display: grid; grid-template-columns: 1fr auto; gap: .5rem; align-items: center; }
+    </style>
+    <script defer src="/js/board.js"></script>
+    <script>
+        window.__KANBAN__ = { updateUrl: '/api/tasks' };
+    </script>
+    <link rel="icon" href="data:," />
+    <meta name="robots" content="noindex" />
+    <!-- Simples, focado em clareza para portfólio -->
+    <!-- Este HTML usa somente estilos nativos e JS mínimo. -->
+    <!-- A API REST completa está exposta em /api/tasks -->
+    <!-- Código do backend em: src/main/java/com/example/kanban -->
+</head>
+<body>
+<h1>Kanban – Tasks</h1>
+
+<form th:action="@{/tasks}" method="post" class="create" th:object="${form}">
+    <div class="row">
+        <input th:field="*{title}" placeholder="Título da tarefa" required maxlength="140"/>
+        <button type="submit">Criar</button>
+    </div>
+    <textarea th:field="*{description}" placeholder="Descrição (opcional)" rows="2" maxlength="2000"></textarea>
+    <select th:field="*{status}">
+        <option th:value="${T(com.example.kanban.domain.TaskStatus).TODO}" selected>TODO</option>
+        <option th:value="${T(com.example.kanban.domain.TaskStatus).DOING}">DOING</option>
+        <option th:value="${T(com.example.kanban.domain.TaskStatus).DONE}">DONE</option>
+    </select>
+    <small class="muted">Dica: você pode alterar o status rapidamente no card.</small>
+    <!-- Auth/CSRF não ativo neste setup (stretch opcional) -->
+    </form>
+
+<div class="board">
+    <div class="col">
+        <h2>TODO</h2>
+        <div th:each="t : ${todo}" class="task" th:attr="data-id=${t.id}">
+            <div><strong th:text="${t.title}">Título</strong></div>
+            <div class="muted" th:text="${#temporals.format(t.createdAt, 'dd/MM/yyyy HH:mm')}" />
+            <div class="row" style="margin-top:.35rem;">
+                <select class="status-picker" data-current="TODO">
+                    <option value="TODO" selected>TODO</option>
+                    <option value="DOING">DOING</option>
+                    <option value="DONE">DONE</option>
+                </select>
+                <button class="delete-btn" title="Excluir">Excluir</button>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <h2>DOING</h2>
+        <div th:each="t : ${doing}" class="task" th:attr="data-id=${t.id}">
+            <div><strong th:text="${t.title}">Título</strong></div>
+            <div class="muted" th:text="${#temporals.format(t.createdAt, 'dd/MM/yyyy HH:mm')}" />
+            <div class="row" style="margin-top:.35rem;">
+                <select class="status-picker" data-current="DOING">
+                    <option value="TODO">TODO</option>
+                    <option value="DOING" selected>DOING</option>
+                    <option value="DONE">DONE</option>
+                </select>
+                <button class="delete-btn" title="Excluir">Excluir</button>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <h2>DONE</h2>
+        <div th:each="t : ${done}" class="task" th:attr="data-id=${t.id}">
+            <div><strong th:text="${t.title}">Título</strong></div>
+            <div class="muted" th:text="${#temporals.format(t.createdAt, 'dd/MM/yyyy HH:mm')}" />
+            <div class="row" style="margin-top:.35rem;">
+                <select class="status-picker" data-current="DONE">
+                    <option value="TODO">TODO</option>
+                    <option value="DOING">DOING</option>
+                    <option value="DONE" selected>DONE</option>
+                </select>
+                <button class="delete-btn" title="Excluir">Excluir</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+</body>
+</html>
