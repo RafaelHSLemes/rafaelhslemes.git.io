@@ -6,12 +6,13 @@ export default function Composer({ onSend, requireCaptcha }: { onSend: (text: st
   const [busy, setBusy] = useState(false)
   const [captcha, setCaptcha] = useState<string | undefined>()
   const captchaRef = useRef<HTMLDivElement>(null)
+  const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined
 
   useEffect(() => {
-    if (requireCaptcha && captchaRef.current) {
-      loadTurnstile().then(() => renderTurnstile(captchaRef.current!, import.meta.env.VITE_TURNSTILE_SITE_KEY, (t) => setCaptcha(t)))
+    if (requireCaptcha && siteKey && captchaRef.current) {
+      loadTurnstile().then(() => renderTurnstile(captchaRef.current!, siteKey, (t) => setCaptcha(t)))
     }
-  }, [requireCaptcha])
+  }, [requireCaptcha, siteKey])
 
   async function handleSend() {
     const trimmed = text.trim()
@@ -28,7 +29,7 @@ export default function Composer({ onSend, requireCaptcha }: { onSend: (text: st
 
   return (
     <div className="border-t border-zinc-200 dark:border-zinc-800 p-2">
-      {requireCaptcha && <div ref={captchaRef} className="mb-2" aria-label="Captcha" />}
+      {requireCaptcha && siteKey && <div ref={captchaRef} className="mb-2" aria-label="Captcha" />}
       <div className="flex gap-2">
         <textarea
           aria-label="Mensagem"

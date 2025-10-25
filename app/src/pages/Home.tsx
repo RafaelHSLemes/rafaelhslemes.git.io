@@ -13,6 +13,10 @@ function uuidv4() {
 }
 
 export default function Home() {
+  const hasCaptcha = Boolean(import.meta.env.VITE_TURNSTILE_SITE_KEY)
+  const [userReady, setUserReady] = useState(() => {
+    try { return localStorage.getItem('chat_user_ready') === '1' } catch { return false }
+  })
   const [visitorId] = useState(() => {
     const k = 'visitor_id'
     const v = localStorage.getItem(k)
@@ -23,7 +27,7 @@ export default function Home() {
   })
   const [conversationId, setConversationId] = useState<string | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
-  const [requireCaptcha, setRequireCaptcha] = useState(true)
+  const [requireCaptcha, setRequireCaptcha] = useState(hasCaptcha)
   const [lastSentAt, setLastSentAt] = useState<number>(0)
   const [email, setEmail] = useState<string>('')
   const [savingEmail, setSavingEmail] = useState(false)
@@ -108,22 +112,53 @@ export default function Home() {
         </div>
       </header>
       <div className="p-3 border-b border-zinc-200 dark:border-zinc-800 flex items-center gap-2">
-        <input
-          type="email"
-          inputMode="email"
-          aria-label="Seu e-mail (opcional)"
-          placeholder="Seu e-mail (opcional para cópia de respostas)"
-          className="flex-1 rounded border border-zinc-300 dark:border-zinc-700 bg-transparent px-2 py-1"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onBlur={saveEmail}
-        />
-        <button className="px-2 py-1 text-sm rounded border" disabled={savingEmail} onClick={saveEmail}>
-          Salvar
-        </button>
+        {!userReady ? (
+          <div className="w-full flex items-center gap-2">
+            <input
+              type="text"
+              aria-label="Seu nome"
+              placeholder="Digite seu nome para iniciar"
+              className="flex-1 rounded border border-zinc-300 dark:border-zinc-700 bg-transparent px-2 py-1"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  const v = (e.target as HTMLInputElement).value.trim()
+                  if (v) { try { localStorage.setItem('chat_user_ready', '1'); localStorage.setItem('chat_user_name', v) } catch {} ; setUserReady(true) }
+                }
+              }}
+            />
+            <button
+              className="px-2 py-1 text-sm rounded border"
+              onClick={() => {
+                const el = (document.activeElement as HTMLInputElement)
+                const v = (el?.value || '').trim()
+                if (v) { try { localStorage.setItem('chat_user_ready', '1'); localStorage.setItem('chat_user_name', v) } catch {} ; setUserReady(true) }
+              }}
+            >Entrar</button>
+          </div>
+        ) : (
+          <>
+            <input
+              type="email"
+              inputMode="email"
+              aria-label="Seu e-mail (opcional)"
+              placeholder="Seu e-mail (opcional para cópia de respostas)"
+              className="flex-1 rounded border border-zinc-300 dark:border-zinc-700 bg-transparent px-2 py-1"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onBlur={saveEmail}
+            />
+            <button className="px-2 py-1 text-sm rounded border" disabled={savingEmail} onClick={saveEmail}>
+              Salvar
+            </button>
+          </>
+        )}
       </div>
       <ChatWindow messages={messages} />
-      <Composer onSend={onSend} requireCaptcha={requireCaptcha} />
+      {userReady ? (
+        <Composer onSend={onSend} requireCaptcha={requireCaptcha} />
+      ) : (
+        <div className="p-3 text-sm opacity-70">Entre com seu nome para habilitar o envio.</div>
+      )}
     </div>
   )
 }
