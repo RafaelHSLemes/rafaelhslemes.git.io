@@ -17,6 +17,7 @@ export default function Home() {
   const [userReady, setUserReady] = useState(() => {
     try { return localStorage.getItem('chat_user_ready') === '1' } catch { return false }
   })
+  const [authed, setAuthed] = useState(false)
   const [visitorId] = useState(() => {
     const k = 'visitor_id'
     const v = localStorage.getItem(k)
@@ -40,6 +41,22 @@ export default function Home() {
       return data as Message
     }
   }), [])
+
+  useEffect(() => {
+    // If logged in via Supabase, skip the name gate
+    ;(async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      const isAuthed = Boolean(user)
+      setAuthed(isAuthed)
+      if (isAuthed) setUserReady(true)
+    })()
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      const isAuthed = Boolean(session?.user)
+      setAuthed(isAuthed)
+      if (isAuthed) setUserReady(true)
+    })
+    return () => { sub.subscription.unsubscribe() }
+  }, [])
 
   useEffect(() => {
     ;(async () => {
@@ -107,6 +124,7 @@ export default function Home() {
       <header className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-zinc-800">
         <h1 className="font-semibold">Fale comigo</h1>
         <div className="flex items-center gap-2">
+          <a className="text-sm underline" href="/">Página inicial</a>
           <a className="text-sm underline" href="#/admin">Admin</a>
           <ThemeToggle />
         </div>

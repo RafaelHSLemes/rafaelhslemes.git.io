@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ChatWindow from './ChatWindow'
 import Composer from './Composer'
-import { db, ensureVisitorAuth, callFunction } from '../lib/supabaseClient'
+import { db, ensureVisitorAuth, callFunction, supabase } from '../lib/supabaseClient'
 import { subscribeToMessages, type Message } from '../lib/realtime'
 
 function uuidv4() {
@@ -20,6 +20,7 @@ export default function ChatWidget() {
   const [userReady, setUserReady] = useState(() => {
     try { return localStorage.getItem('chat_user_ready') === '1' } catch { return false }
   })
+  const [authed, setAuthed] = useState(false)
   const [visitorId] = useState(() => {
     const k = 'visitor_id'
     const v = localStorage.getItem(k)
@@ -43,6 +44,22 @@ export default function ChatWidget() {
       return data as Message
     }
   }), [])
+
+  useEffect(() => {
+    // Keep track of Supabase auth; if logged in, allow chatting without asking name
+    ;(async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      const isAuthed = Boolean(user)
+      setAuthed(isAuthed)
+      if (isAuthed) setUserReady(true)
+    })()
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      const isAuthed = Boolean(session?.user)
+      setAuthed(isAuthed)
+      if (isAuthed) setUserReady(true)
+    })
+    return () => { sub.subscription.unsubscribe() }
+  }, [])
 
   useEffect(() => {
     // RLS: obtain a JWT carrying visitor_id so anon can access their own rows

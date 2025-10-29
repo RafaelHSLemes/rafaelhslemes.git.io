@@ -41,7 +41,10 @@ export default function Signup() {
     <div className="min-h-screen flex flex-col">
       <header className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-zinc-800">
         <h1 className="font-semibold">Cadastro</h1>
-        <ThemeToggle />
+        <div className="flex items-center gap-2">
+          <a className="text-sm underline" href="/">Página inicial</a>
+          <ThemeToggle />
+        </div>
       </header>
       <main className="flex-1 grid place-items-center p-4">
         <form onSubmit={onSignup} className="w-full max-w-sm space-y-3">
