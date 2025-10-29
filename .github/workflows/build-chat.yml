@@ -2,6 +2,11 @@ name: Build and Publish Chat
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: "GitHub Environment name (e.g. production)"
+        required: false
+        default: "production"
   push:
     paths:
       - 'app/**'
@@ -13,6 +18,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment || 'production' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,10 +33,11 @@ jobs:
 
       - name: Build chat (Vite)
         env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-          VITE_BASE_PATH: /chat/
-          VITE_TURNSTILE_SITE_KEY: ${{ secrets.VITE_TURNSTILE_SITE_KEY }}
+          # Prefer Environment or Repo Secrets; fallback to Variables; default base path
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL || vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY || vars.VITE_SUPABASE_ANON_KEY }}
+          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || '/chat/' }}
+          VITE_TURNSTILE_SITE_KEY: ${{ secrets.VITE_TURNSTILE_SITE_KEY || vars.VITE_TURNSTILE_SITE_KEY }}
         run: npm run build
 
       - name: Publish to chat directory
