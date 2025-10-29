@@ -5,6 +5,8 @@ import './styles/global.css'
 import Home from './pages/Home'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
+import Signup from './pages/Signup'
+import UserLogin from './pages/UserLogin'
 import ChatWidget from './components/ChatWidget'
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
     <HashRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/user-login" element={<UserLogin />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Navigate to="/" replace />} />
