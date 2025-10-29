@@ -3,7 +3,9 @@ import { supabase } from '../lib/supabaseClient'
 
 export default function Login() {
   async function login() {
-    await supabase.auth.signInWithOAuth({ provider: 'github' })
+    const basePath = (import.meta.env.VITE_BASE_PATH as string) || '/'
+    const baseUrl = new URL(basePath.endsWith('/') ? basePath : basePath + '/', window.location.origin).toString()
+    await supabase.auth.signInWithOAuth({ provider: 'github', options: { redirectTo: baseUrl } })
   }
 
   return (

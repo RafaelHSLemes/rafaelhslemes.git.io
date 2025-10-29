@@ -18,10 +18,15 @@ export default function Signup() {
     setError(null)
     setMessage(null)
     try {
+      const basePath = (import.meta.env.VITE_BASE_PATH as string) || '/'
+      const baseUrl = new URL(basePath.endsWith('/') ? basePath : basePath + '/', window.location.origin).toString()
       const { error } = await supabase.auth.signUp({
         email: email.trim(),
         password,
-        options: { data: { name: name.trim() } },
+        options: {
+          data: { name: name.trim() },
+          emailRedirectTo: baseUrl,
+        },
       })
       if (error) throw error
       setMessage('Cadastro iniciado. Verifique seu e-mail para confirmar.')
@@ -84,4 +89,3 @@ export default function Signup() {
     </div>
   )
 }
-
