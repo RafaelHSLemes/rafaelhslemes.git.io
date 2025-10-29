@@ -22,8 +22,8 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install deps (workspace)
-        run: npm ci
+      - name: Install deps (app only)
+        run: npm ci --prefix app
 
       - name: Build chat (Vite)
         env:
@@ -50,4 +50,3 @@ jobs:
           else
             echo "No changes to commit."
           fi
-
