@@ -1,11 +1,14 @@
+# Dependencies
 node_modules/
-dist/
+
+# Editor/OS
 .DS_Store
-*.local
-.env
-app/.env
-app/.vite
-app/node_modules/
+.idea/
+
+# Build outputs
 app/dist/
-supabase/.temp
+
+# Local environment files (never commit)
+app/.env
+app/.env.*
 
