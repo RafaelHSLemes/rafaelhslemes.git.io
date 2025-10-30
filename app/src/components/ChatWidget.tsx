@@ -47,16 +47,24 @@ export default function ChatWidget() {
 
   useEffect(() => {
     // Keep track of Supabase auth; if logged in, allow chatting without asking name
+    const enableChat = () => {
+      try {
+        localStorage.setItem('chat_user_ready', '1')
+        const n = localStorage.getItem('chat_user_name')
+        if (!n) localStorage.setItem('chat_user_name', 'Usuário')
+      } catch {}
+      setUserReady(true)
+    }
     ;(async () => {
       const { data: { user } } = await supabase.auth.getUser()
       const isAuthed = Boolean(user)
       setAuthed(isAuthed)
-      if (isAuthed) setUserReady(true)
+      if (isAuthed) enableChat()
     })()
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
       const isAuthed = Boolean(session?.user)
       setAuthed(isAuthed)
-      if (isAuthed) setUserReady(true)
+      if (isAuthed) enableChat()
     })
     return () => { sub.subscription.unsubscribe() }
   }, [])
