@@ -24,7 +24,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <ChatWidget />
+      {/** Do not render widget inside full chat app to avoid overlapping UI */}
     </HashRouter>
   )
 }

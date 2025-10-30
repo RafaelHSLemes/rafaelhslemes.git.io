@@ -74,6 +74,15 @@ export default function Home() {
       if (!cid) return
       setConversationId(cid)
       if (existing?.email) setEmail(existing.email as string)
+      // If user is logged and no email set yet, store user's email
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        const uEmail = user?.email || ''
+        if (uEmail && !existing?.email) {
+          await db().from('conversations').update({ email: uEmail }).eq('id', cid)
+          setEmail(uEmail)
+        }
+      } catch {}
       // load messages
       const { data: msgs } = await db().from('messages').select('*').eq('conversation_id', cid).order('created_at', { ascending: true })
       setMessages(msgs as Message[] || [])

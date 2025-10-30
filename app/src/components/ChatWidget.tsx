@@ -75,6 +75,14 @@ export default function ChatWidget() {
       if (!cid) return
       setConversationId(cid)
       if (existing?.email) setEmail(existing.email as string)
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        const uEmail = user?.email || ''
+        if (uEmail && !existing?.email) {
+          await db().from('conversations').update({ email: uEmail }).eq('id', cid)
+          setEmail(uEmail)
+        }
+      } catch {}
 
       const { data: msgs } = await db().from('messages').select('*').eq('conversation_id', cid).order('created_at', { ascending: true })
       setMessages((msgs as Message[]) || [])
