@@ -4,7 +4,7 @@ import ThemeToggle from '../components/ThemeToggle'
 import ChatWindow from '../components/ChatWindow'
 import Composer from '../components/Composer'
 import Metrics from '../components/Metrics'
-import { db, supabase } from '../lib/supabaseClient'
+import { supabase } from '../lib/supabaseClient'
 import { subscribeToMessages } from '../lib/realtime'
 import type { Message } from '../lib/realtime'
 
@@ -24,7 +24,7 @@ export default function Admin() {
   }, [filter, q])
 
   async function loadConversations() {
-    let qry = db().from('conversations').select('*').order('last_event_at', { ascending: false })
+    let qry = supabase.from('conversations').select('*').order('last_event_at', { ascending: false })
     if (filter !== 'all') qry = qry.eq('status', filter)
     const { data } = await qry
     let list = (data || []) as Conversation[]
@@ -34,7 +34,7 @@ export default function Admin() {
 
   async function openConversation(id: string) {
     setActiveId(id)
-    const { data } = await db().from('messages').select('*').eq('conversation_id', id).order('created_at', { ascending: true })
+    const { data } = await supabase.from('messages').select('*').eq('conversation_id', id).order('created_at', { ascending: true })
     setMessages((data || []) as Message[])
   }
 
@@ -54,7 +54,7 @@ export default function Admin() {
   }
 
   async function closeConversation(id: string) {
-    await db().from('conversations').update({ status: 'closed' }).eq('id', id)
+    await supabase.from('conversations').update({ status: 'closed' }).eq('id', id)
     await loadConversations()
   }
 

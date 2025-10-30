@@ -5,7 +5,8 @@ export default function Login() {
   async function login() {
     const basePath = (import.meta.env.VITE_BASE_PATH as string) || '/'
     const baseUrl = new URL(basePath.endsWith('/') ? basePath : basePath + '/', window.location.origin).toString()
-    await supabase.auth.signInWithOAuth({ provider: 'github', options: { redirectTo: baseUrl } })
+    const toAdmin = `${baseUrl}#/admin`
+    await supabase.auth.signInWithOAuth({ provider: 'github', options: { redirectTo: toAdmin } })
   }
 
   return (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { db, supabase } from '../lib/supabaseClient'
+import { supabase } from '../lib/supabaseClient'
 
 export default function AuthGate({ children }: { children: React.ReactNode }) {
   const [allowed, setAllowed] = useState<boolean | null>(null)
@@ -11,7 +11,8 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
       // Check admin claim or table fallback
       const isAdminClaim = Boolean((user.app_metadata as any)?.is_admin)
       if (isAdminClaim) return setAllowed(true)
-      const { data, error } = await db().from('admins').select('user_id').eq('user_id', user.id).maybeSingle()
+      // Query admins with the authenticated JWT (not the visitor token)
+      const { data, error } = await supabase.from('admins').select('user_id').eq('user_id', user.id).maybeSingle()
       if (error) console.error(error)
       setAllowed(Boolean(data))
     })()

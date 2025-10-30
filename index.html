@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Portfólio • Rafael H S Lemes</title>
-    <meta name="description" content="Portfólio de Rafael H S Lemes — Full-Stack Developer." />
+    <title>PortfÃ³lio â€¢ Rafael H S Lemes</title>
+    <meta name="description" content="PortfÃ³lio de Rafael H S Lemes â€” Full-Stack Developer." />
     <link rel="preload" href="assets/profilepic.png" as="image" />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -12,14 +12,13 @@
     <header class="topbar">
       <div class="brand">@rafaelhslemes</div>
       <button id="themeToggle" class="theme-toggle" aria-label="Alternar tema" title="Alternar tema">
-        <span class="icon" aria-hidden="true">🌙</span>
+        <span class="icon" aria-hidden="true">ðŸŒ™</span>
         <span class="label">Tema</span>
       </button>
       <nav style="margin-left:auto; display:flex; gap:.5rem; align-items:center">
-        <a href="chat/#/" class="btn">Abrir Chat</a>
         <a href="chat/#/signup" class="btn">Cadastro</a>
-        <a href="chat/#/user-login" class="btn">Login Usuário</a>
-        <a href="chat/#/admin" class="btn">Admin</a>
+        <a href="chat/#/user-login" class="btn">Login UsuÃ¡rio</a>
+        <a id="adminLink" href="chat/#/admin" class="btn" style="display:none">Admin</a>
         <a href="chat/#/login" class="btn">Login Admin</a>
       </nav>
     </header>
@@ -28,10 +27,10 @@
       <aside class="profile">
         <img class="avatar" src="assets/profilepic.png" alt="Foto de perfil de Rafael" />
         <h1 class="name">Rafael H S Lemes</h1>
-        <p class="role">Full‑Stack Developer</p>
+        <p class="role">Fullâ€‘Stack Developer</p>
         <div class="badges">
-          <span class="badge">Java • Spring Boot</span>
-          <span class="badge">TypeScript • MERN</span>
+          <span class="badge">Java â€¢ Spring Boot</span>
+          <span class="badge">TypeScript â€¢ MERN</span>
         </div>
         <nav class="social">
           <a href="https://github.com/RafaelHSLemes" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
@@ -40,7 +39,7 @@
       </aside>
 
       <section class="content">
-        <nav class="tabs" role="tablist" aria-label="Sessões do portfólio">
+        <nav class="tabs" role="tablist" aria-label="SessÃµes do portfÃ³lio">
           <button role="tab" aria-selected="true" aria-controls="tab-sobre" id="tabbtn-sobre" class="tab-btn is-active">Sobre mim</button>
           <button role="tab" aria-selected="false" aria-controls="tab-projetos" id="tabbtn-projetos" class="tab-btn">Projetos</button>
         </nav>
@@ -49,12 +48,12 @@
           <article class="card">
             <h2>Sobre mim</h2>
             <p>
-            Desde a infância, sempre fui fascinado por pessoas que conseguem transformar ideias em impacto. Quando eu tinha dez anos, assistindo ao filme <i>The Social Network</i> com meu pai, percebi algo que moldaria meu caminho: o poder do conhecimento e da tecnologia para mudar o mundo. Aquele momento despertou em mim o desejo de dominar a lógica, compreender sistemas e construir algo significativo — não por meio do caos, mas da criação.
+            Desde a infÃ¢ncia, sempre fui fascinado por pessoas que conseguem transformar ideias em impacto. Quando eu tinha dez anos, assistindo ao filme <i>The Social Network</i> com meu pai, percebi algo que moldaria meu caminho: o poder do conhecimento e da tecnologia para mudar o mundo. Aquele momento despertou em mim o desejo de dominar a lÃ³gica, compreender sistemas e construir algo significativo â€” nÃ£o por meio do caos, mas da criaÃ§Ã£o.
           </p>
           <p>
-            Hoje, essa ambição se tornou o meu propósito. Sou Desenvolvedor Full-Stack desde 2023, programando em Java (Spring Boot) e TypeScript utilizando o stack MERN (MongoDB, Express, React, Node.js).
-            Nos últimos anos, desenvolvi sistemas que conectam tecnologia e estratégia, incluindo o <strong>Isteel</strong>, uma plataforma modular que integra clientes, metalúrgicos e motoristas, e o <strong>ForBra</strong>, um aplicativo baseado em geolocalização com autenticação JWT, criado para conectar brasileiros no exterior.
-            Sou movido por curiosidade, propósito e inovação, porque cada linha de código tem o potencial de gerar um impacto duradouro.
+            Hoje, essa ambiÃ§Ã£o se tornou o meu propÃ³sito. Sou Desenvolvedor Full-Stack desde 2023, programando em Java (Spring Boot) e TypeScript utilizando o stack MERN (MongoDB, Express, React, Node.js).
+            Nos Ãºltimos anos, desenvolvi sistemas que conectam tecnologia e estratÃ©gia, incluindo o <strong>Isteel</strong>, uma plataforma modular que integra clientes, metalÃºrgicos e motoristas, e o <strong>ForBra</strong>, um aplicativo baseado em geolocalizaÃ§Ã£o com autenticaÃ§Ã£o JWT, criado para conectar brasileiros no exterior.
+            Sou movido por curiosidade, propÃ³sito e inovaÃ§Ã£o, porque cada linha de cÃ³digo tem o potencial de gerar um impacto duradouro.
           </p>
           </article>
         </section>
@@ -70,7 +69,7 @@
                 <!-- Abas de projetos inseridas via JS -->
               </div>
               <div class="project-panels" id="projectPanels">
-                <!-- Painéis de projeto inseridos via JS -->
+                <!-- PainÃ©is de projeto inseridos via JS -->
               </div>
             </div>
           </article>
@@ -79,7 +78,7 @@
     </main>
 
     <footer class="footer">
-      <small>© <span id="year"></span> Rafael H S Lemes. Todos os direitos reservados.</small>
+      <small>Â© <span id="year"></span> Rafael H S Lemes. Todos os direitos reservados.</small>
     </footer>
 
     <script src="script.js"></script>
@@ -90,3 +89,5 @@
     ></script>
   </body>
   </html>
+
+
