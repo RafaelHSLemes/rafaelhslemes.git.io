@@ -5,8 +5,9 @@ export default function Login() {
   async function login() {
     const basePath = (import.meta.env.VITE_BASE_PATH as string) || '/'
     const baseUrl = new URL(basePath.endsWith('/') ? basePath : basePath + '/', window.location.origin).toString()
-    const toAdmin = `${baseUrl}#/admin`
-    await supabase.auth.signInWithOAuth({ provider: 'github', options: { redirectTo: toAdmin } })
+    try { localStorage.setItem('post_login_target', '/admin') } catch {}
+    // Important: redirect to the SPA root so Supabase can place the access_token at #... and the SDK can parse it.
+    await supabase.auth.signInWithOAuth({ provider: 'github', options: { redirectTo: baseUrl } })
   }
 
   return (

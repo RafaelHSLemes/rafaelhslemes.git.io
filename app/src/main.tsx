@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import UserLogin from './pages/UserLogin'
 import ChatWidget from './components/ChatWidget'
+import PostLoginRedirector from './components/PostLoginRedirector'
 
 function App() {
   const embedOnly = new URL(window.location.href).searchParams.get('embed') === '1'
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <PostLoginRedirector />
       {/** Do not render widget inside full chat app to avoid overlapping UI */}
     </HashRouter>
   )
