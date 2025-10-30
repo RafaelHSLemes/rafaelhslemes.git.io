@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+﻿import { useEffect, useMemo, useState } from 'react'
 import ThemeToggle from '../components/ThemeToggle'
 import ChatWindow from '../components/ChatWindow'
 import Composer from '../components/Composer'
@@ -32,8 +32,7 @@ export default function Home() {
   const [lastSentAt, setLastSentAt] = useState<number>(0)
   const [email, setEmail] = useState<string>('')
   const [savingEmail, setSavingEmail] = useState(false)
-  const [authed, setAuthed] = useState(false)
-
+  
   // lightweight fetch wrapper to attach Authorization if we minted a visitor token
   const rest = useMemo(() => ({
     async insertMessage(text: string, author: 'visitor' | 'admin', conversationId: string) {
@@ -154,7 +153,7 @@ export default function Home() {
       <header className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-zinc-800">
         <h1 className="font-semibold">Fale comigo</h1>
         <div className="flex items-center gap-2">
-          <a className="text-sm underline" href="/">Página inicial</a>
+          <a className="text-sm underline" href="/">PÃ¡gina inicial</a>
           <a className="text-sm underline" href="#/admin">Admin</a>
           {authed && (
             <button className="text-sm px-2 py-1 rounded border" onClick={logout}>Sair</button>
@@ -213,3 +212,9 @@ export default function Home() {
     </div>
   )
 }
+
+
+
+
+
+
