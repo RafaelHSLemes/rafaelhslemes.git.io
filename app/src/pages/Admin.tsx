@@ -16,9 +16,12 @@ export default function Admin() {
   const [messages, setMessages] = useState<Message[]>([])
   const [filter, setFilter] = useState<'all' | 'open' | 'closed'>('all')
   const [q, setQ] = useState('')
+  const [userEmail, setUserEmail] = useState<string>('')
 
   useEffect(() => {
     ;(async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUserEmail(user?.email || '')
       await loadConversations()
     })()
   }, [filter, q])
@@ -58,13 +61,26 @@ export default function Admin() {
     await loadConversations()
   }
 
+  async function logout() {
+    try {
+      await supabase.auth.signOut()
+    } finally {
+      try { localStorage.removeItem('post_login_target') } catch {}
+      const basePath = (import.meta.env.VITE_BASE_PATH as string) || '/'
+      const baseUrl = new URL(basePath.endsWith('/') ? basePath : basePath + '/', window.location.origin).toString()
+      window.location.href = baseUrl
+    }
+  }
+
   return (
     <AuthGate>
       <div className="min-h-screen flex flex-col">
         <header className="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-zinc-800">
           <h1 className="font-semibold">Admin</h1>
           <div className="flex items-center gap-2">
+            {userEmail && <span className="text-xs opacity-70">{userEmail}</span>}
             <a className="text-sm underline" href="#/">Visitante</a>
+            <button className="text-sm px-2 py-1 rounded border" onClick={logout}>Sair</button>
             <ThemeToggle />
           </div>
         </header>

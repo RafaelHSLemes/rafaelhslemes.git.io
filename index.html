@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Portfólio — Rafael H S Lemes</title>
-    <meta name="description" content="Portfólio de Rafael H S Lemes — Full-Stack Developer." />
+    <title>PortfÃ³lio â€” Rafael H S Lemes</title>
+    <meta name="description" content="PortfÃ³lio de Rafael H S Lemes â€” Full-Stack Developer." />
     <link rel="preload" href="assets/profilepic.png" as="image" />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -12,12 +12,12 @@
     <header class="topbar">
       <div class="brand">@rafaelhslemes</div>
       <button id="themeToggle" class="theme-toggle" aria-label="Alternar tema" title="Alternar tema">
-        <span class="icon" aria-hidden="true">🌙</span>
+        <span class="icon" aria-hidden="true">ðŸŒ™</span>
         <span class="label">Tema</span>
       </button>
       <nav style="margin-left:auto; display:flex; gap:.5rem; align-items:center">
         <a href="chat/#/signup" class="btn">Cadastro</a>
-        <a href="chat/#/user-login" class="btn">Login Usuário</a>
+        <a href="chat/#/user-login" class="btn">Login UsuÃ¡rio</a>
         <a href="chat/#/login" class="btn">Login Admin</a>
         <a id="adminLink" href="chat/#/admin" class="btn" style="display:none">Admin</a>
       </nav>
@@ -29,8 +29,8 @@
         <h1 class="name">Rafael H S Lemes</h1>
         <p class="role">Full-Stack Developer</p>
         <div class="badges">
-          <span class="badge">Java • Spring Boot</span>
-          <span class="badge">TypeScript • MERN</span>
+          <span class="badge">Java â€¢ Spring Boot</span>
+          <span class="badge">TypeScript â€¢ MERN</span>
         </div>
         <nav class="social">
           <a href="https://github.com/RafaelHSLemes" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
@@ -39,7 +39,7 @@
       </aside>
 
       <section class="content">
-        <nav class="tabs" role="tablist" aria-label="Sessões do portfólio">
+        <nav class="tabs" role="tablist" aria-label="SessÃµes do portfÃ³lio">
           <button role="tab" aria-selected="true" aria-controls="tab-sobre" id="tabbtn-sobre" class="tab-btn is-active">Sobre mim</button>
           <button role="tab" aria-selected="false" aria-controls="tab-projetos" id="tabbtn-projetos" class="tab-btn">Projetos</button>
         </nav>
@@ -48,10 +48,10 @@
           <article class="card">
             <h2>Sobre mim</h2>
             <p>
-              Desde a infância, sempre fui fascinado por pessoas que transformam ideias em impacto. Aos dez anos, vendo <i>The Social Network</i> com meu pai, entendi o poder do conhecimento e da tecnologia para mudar o mundo. Aquilo despertou em mim o desejo de dominar a lógica, compreender sistemas e construir algo significativo — pela criação, não pelo caos.
+              Desde a infÃ¢ncia, sempre fui fascinado por pessoas que transformam ideias em impacto. Aos dez anos, vendo <i>The Social Network</i> com meu pai, entendi o poder do conhecimento e da tecnologia para mudar o mundo. Aquilo despertou em mim o desejo de dominar a lÃ³gica, compreender sistemas e construir algo significativo â€” pela criaÃ§Ã£o, nÃ£o pelo caos.
             </p>
             <p>
-              Hoje, essa ambição é o meu propósito. Sou Desenvolvedor Full‑Stack desde 2023, programando em Java (Spring Boot) e TypeScript com o stack MERN (MongoDB, Express, React, Node.js). Nos últimos anos, desenvolvi sistemas que aproximam tecnologia e estratégia, como o <strong>Isteel</strong> (plataforma modular que integra clientes, metalúrgicos e motoristas) e o <strong>ForBra</strong> (aplicativo com geolocalização e autenticação JWT para conectar brasileiros no exterior). Sou movido por curiosidade, propósito e inovação — porque cada linha de código pode gerar um impacto duradouro.
+              Hoje, essa ambiÃ§Ã£o Ã© o meu propÃ³sito. Sou Desenvolvedor Fullâ€‘Stack desde 2023, programando em Java (Spring Boot) e TypeScript com o stack MERN (MongoDB, Express, React, Node.js). Nos Ãºltimos anos, desenvolvi sistemas que aproximam tecnologia e estratÃ©gia, como o <strong>Isteel</strong> (plataforma modular que integra clientes, metalÃºrgicos e motoristas) e o <strong>ForBra</strong> (aplicativo com geolocalizaÃ§Ã£o e autenticaÃ§Ã£o JWT para conectar brasileiros no exterior). Sou movido por curiosidade, propÃ³sito e inovaÃ§Ã£o â€” porque cada linha de cÃ³digo pode gerar um impacto duradouro.
             </p>
           </article>
         </section>
@@ -72,12 +72,12 @@
     </main>
 
     <footer class="footer">
-      <small>© <span id="year"></span> Rafael H S Lemes. Todos os direitos reservados.</small>
+      <small>Â© <span id="year"></span> Rafael H S Lemes. Todos os direitos reservados.</small>
     </footer>
 
     <script src="script.js"></script>
     <script>
-      // Exibe o botão Admin apenas quando houver sessão do Supabase neste domínio
+      // Exibe o botÃ£o Admin apenas quando houver sessÃ£o do Supabase neste domÃ­nio
       (function(){
         try {
           var ref = 'atdhhnyzjlmqamxybexz'; // Supabase project ref
@@ -91,6 +91,8 @@
     </script>
     <!-- Chat embed: set data-src to your deployed chat widget URL (supports ?embed=1) -->
     <script src="chat-embed.js" data-src="chat/?embed=1&open=1#/"></script>
-  </body>
+  <script>(function(){try{var ref="atdhhnyzjlmqamxybexz";var key="sb-"+ref+"-auth-token";var el=document.getElementById("adminLink");function u(){if(!el) el=document.getElementById("adminLink"); if(!el) return; el.style.display=localStorage.getItem(key)?"":"none";}u(); window.addEventListener("storage",function(e){if(e.key===key)u();}); var n=0; var t=setInterval(function(){u(); if(++n>20) clearInterval(t);},500);}catch(e){}})();</script></body>
   </html>
+
+
 

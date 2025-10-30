@@ -32,6 +32,7 @@ export default function Home() {
   const [lastSentAt, setLastSentAt] = useState<number>(0)
   const [email, setEmail] = useState<string>('')
   const [savingEmail, setSavingEmail] = useState(false)
+  const [authed, setAuthed] = useState(false)
 
   // lightweight fetch wrapper to attach Authorization if we minted a visitor token
   const rest = useMemo(() => ({
@@ -68,6 +69,9 @@ export default function Home() {
 
   useEffect(() => {
     ;(async () => {
+      // auth state
+      const { data: { user } } = await supabase.auth.getUser()
+      setAuthed(Boolean(user))
       // obtain short-lived visitor token for RLS
       await ensureVisitorAuth(visitorId)
       // ensure conversation exists
@@ -99,6 +103,15 @@ export default function Home() {
       return () => unsub()
     })()
   }, [visitorId])
+
+  async function logout() {
+    try {
+      await supabase.auth.signOut()
+      try { localStorage.removeItem('post_login_target'); localStorage.removeItem('chat_user_ready') } catch {}
+      setAuthed(false)
+      setUserReady(false)
+    } catch {}
+  }
 
   async function onSend(text: string, captchaToken?: string) {
     if (!conversationId) return
@@ -143,6 +156,9 @@ export default function Home() {
         <div className="flex items-center gap-2">
           <a className="text-sm underline" href="/">Página inicial</a>
           <a className="text-sm underline" href="#/admin">Admin</a>
+          {authed && (
+            <button className="text-sm px-2 py-1 rounded border" onClick={logout}>Sair</button>
+          )}
           <ThemeToggle />
         </div>
       </header>
