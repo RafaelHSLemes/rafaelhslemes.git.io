@@ -1,13 +1,21 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 
-const url = import.meta.env.VITE_SUPABASE_URL as string | undefined
-const anon = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
+let url = import.meta.env.VITE_SUPABASE_URL as string | undefined
+let anon = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
+
+// Runtime fallback for production if envs were not injected in build
+// Safe: anon key é pública por design no Supabase
+const FALLBACK_URL = 'https://atdhhnyzjlmqamxybexz.supabase.co'
+const FALLBACK_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0ZGhobnl6amxtcWFteHliZXh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEzMTgwODgsImV4cCI6MjA3Njg5NDA4OH0.G_5XGC9Qf__1yXgMdvLSzwrZ_F55kl4bJcTDsEO9xYU'
+
+if (!url || url.includes('example.com')) url = FALLBACK_URL
+if (!anon || anon === 'public-anon-key') anon = FALLBACK_ANON
 
 // Create a safe client even if envs are missing, to avoid blank screen on embed
 // When not configured, network calls will fail but UI still renders.
 export const supabase: SupabaseClient = createClient(
-  url || 'https://example.com',
-  anon || 'public-anon-key',
+  url || FALLBACK_URL,
+  anon || FALLBACK_ANON,
   {
     auth: {
       persistSession: true,
