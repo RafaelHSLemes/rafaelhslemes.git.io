@@ -1,4 +1,4 @@
-// Theme: toggle + persist
+﻿// Theme: toggle + persist
 (function initTheme() {
   const root = document.documentElement;
   const key = 'theme-preference';
@@ -156,3 +156,4 @@ document.getElementById('year').textContent = new Date().getFullYear();
     panels?.appendChild(fallback);
   }
 })();
+
