@@ -153,6 +153,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
     const fallback = document.createElement('p');
     fallback.className = 'muted';
     fallback.textContent = 'Nenhum projeto disponível no momento.';
+    fallback.textContent = 'Nenhum projeto disponível no momento.';
     panels?.appendChild(fallback);
   }
 })();
