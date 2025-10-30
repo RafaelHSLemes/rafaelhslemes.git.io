@@ -2,7 +2,6 @@
 import { createRoot } from 'react-dom/client'
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import './styles/global.css'
-import Home from './pages/Home'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -19,7 +18,7 @@ function App() {
   return (
     <HashRouter>\n      <AuthBootstrap />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/user-login" element={<UserLogin />} />
         <Route path="/admin" element={<Admin />} />
