@@ -4,7 +4,7 @@ import ThemeToggle from '../components/ThemeToggle'
 import ChatWindow from '../components/ChatWindow'
 import Composer from '../components/Composer'
 import Metrics from '../components/Metrics'
-import { supabase } from '../lib/supabaseClient'
+import { supabase, callFunction } from '../lib/supabaseClient'
 import { subscribeToMessages } from '../lib/realtime'
 import type { Message } from '../lib/realtime'
 
@@ -52,8 +52,11 @@ export default function Admin() {
 
   async function sendAdmin(text: string) {
     if (!activeId) return
-    const { error } = await supabase.functions.invoke('admin-reply', { body: { conversationId: activeId, text } })
-    if (error) console.error(error)
+    try {
+      await callFunction('admin-reply', { conversationId: activeId, text })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   async function closeConversation(id: string) {

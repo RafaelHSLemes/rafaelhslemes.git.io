@@ -29,9 +29,23 @@ let restClient: SupabaseClient | null = null
 
 // Helper to call Edge Functions
 export async function callFunction<T = unknown>(name: string, body?: unknown, headers?: Record<string, string>) {
-  const { data, error } = await supabase.functions.invoke<T>(name, { body, headers })
-  if (error) throw error
-  return data as T
+  async function invoke(n: string) {
+    return await supabase.functions.invoke<T>(n, { body, headers })
+  }
+  // Try exact function name first
+  let { data, error } = await invoke(name)
+  if (!error) return data as T
+
+  // Some deployments append "--HTTP-" to function names
+  const variants = [
+    `${name}--HTTP-`,
+  ]
+  for (const alt of variants) {
+    const r = await invoke(alt)
+    if (!r.error) return r.data as T
+    error = r.error
+  }
+  throw error
 }
 
 // Issue a short-lived visitor token with custom claim visitor_id
