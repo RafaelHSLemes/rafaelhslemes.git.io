@@ -99,7 +99,7 @@ export default function ChatWidget() {
       unsub = subscribeToMessages(cid, (m) => setMessages((prev) => [...prev, m]))
     })()
     return () => { cancelled = true; if (unsub) unsub() }
-  }, [visitorId])  async function onSend(text: string, captchaToken?: string) {
+  }, [visitorId]);  async function onSend(text: string, captchaToken?: string) {
     if (!conversationId) return
     const now = Date.now()
     if (now - lastSentAt < 2000) return // rate-limit 1 msg/2s (front)
