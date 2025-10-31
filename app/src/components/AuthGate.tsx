@@ -22,3 +22,4 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
   if (!allowed) return <div className="p-4">Acesso negado. Faça login com GitHub.</div>
   return <>{children}</>
 }
+

@@ -7,7 +7,7 @@ export default function PostLoginRedirector() {
   useEffect(() => {
     const go = async () => {
       const hash = (typeof window !== 'undefined') ? window.location.hash : ''
-      const target = (typeof localStorage !== 'undefined') ? (localStorage.getItem('post_login_target') || '/admin') : '/admin'
+      const target = (typeof localStorage !== 'undefined') ? (localStorage.getItem('post_login_target') || '/') : '/'
       const { data: { session } } = await supabase.auth.getSession()
       // If we just returned from OAuth (hash has access_token) or session already exists, route to target
       if ((hash.includes('access_token=') || session)) {
@@ -20,7 +20,7 @@ export default function PostLoginRedirector() {
     }
     go()
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      const target = (typeof localStorage !== 'undefined') ? (localStorage.getItem('post_login_target') || '/admin') : '/admin'
+      const target = (typeof localStorage !== 'undefined') ? (localStorage.getItem('post_login_target') || '/') : '/'
       if (session) {
         try { localStorage.removeItem('post_login_target') } catch {}
         navigate(target, { replace: true })

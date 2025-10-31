@@ -6,6 +6,7 @@ import Admin from './pages/Admin'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import UserLogin from './pages/UserLogin'
+import Home from './pages/Home'
 import ChatWidget from './components/ChatWidget'
 import AuthBootstrap from './components/AuthBootstrap'
 import PostLoginRedirector from './components/PostLoginRedirector'
@@ -18,7 +19,7 @@ function App() {
   return (
     <HashRouter>\n      <AuthBootstrap />
       <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/user-login" element={<UserLogin />} />
         <Route path="/admin" element={<Admin />} />
