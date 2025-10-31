@@ -23,7 +23,8 @@ function App() {
         <Route path="/user-login" element={<UserLogin />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/login" element={<Login />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        {/** Important: do NOT redirect unknown paths; this preserves OAuth callback hash (e.g., #access_token=...) until Supabase processes it. */}
+        <Route path="*" element={<div />} />
       </Routes>
       <PostLoginRedirector />
       {/** Do not render widget inside full chat app to avoid overlapping UI */}
