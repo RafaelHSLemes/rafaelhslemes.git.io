@@ -109,8 +109,14 @@ export default function ChatWidget() {
     const idle = !messages.length || (messages.length && now - (messages[messages.length - 1]?.created_at ? new Date(messages[messages.length - 1].created_at).getTime() : 0) > 10 * 60 * 1000)
     if (requireCaptcha && !captchaToken) return
 
-    const inserted = await rest.insertMessage(text, 'visitor', conversationId)
-    setMessages((prev) => [...prev, inserted])
+    try {
+      const inserted = await rest.insertMessage(text, 'visitor', conversationId)
+      setMessages((prev) => [...prev, inserted])
+    } catch (e) {
+      console.error('Falha ao enviar mensagem', e)
+      setLastSentAt(0)
+      return
+    }
 
     if (idle) {
       await callFunction('notify-new-message', { conversationId, preview: text.slice(0, 120), captchaToken })
