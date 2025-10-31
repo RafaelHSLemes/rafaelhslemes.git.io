@@ -66,7 +66,9 @@ export default function Home() {
     return () => { sub.subscription.unsubscribe() }
   }, [])
 
-  useEffect(() => {
+    useEffect(() => {
+    let unsub: (() => void) | null = null
+    let cancelled = false
     ;(async () => {
       // auth state
       const { data: { user } } = await supabase.auth.getUser()
@@ -82,7 +84,7 @@ export default function Home() {
         if (e2) console.error(e2)
         cid = created?.id
       }
-      if (!cid) return
+      if (!cid || cancelled) return
       setConversationId(cid)
       if (existing?.email) setEmail(existing.email as string)
       // If user is logged and no email set yet, store user's email
@@ -96,13 +98,12 @@ export default function Home() {
       } catch {}
       // load messages
       const { data: msgs } = await db().from('messages').select('*').eq('conversation_id', cid).order('created_at', { ascending: true })
-      setMessages(msgs as Message[] || [])
+      if (!cancelled) setMessages(msgs as Message[] || [])
       // subscribe realtime
-      const unsub = subscribeToMessages(cid, (m) => setMessages((prev) => [...prev, m]))
-      return () => unsub()
+      unsub = subscribeToMessages(cid, (m) => setMessages((prev) => [...prev, m]))
     })()
+    return () => { cancelled = true; if (unsub) unsub() }
   }, [visitorId])
-
   async function logout() {
     try {
       await supabase.auth.signOut()
@@ -219,6 +220,7 @@ export default function Home() {
     </div>
   )
 }
+
 
 
 

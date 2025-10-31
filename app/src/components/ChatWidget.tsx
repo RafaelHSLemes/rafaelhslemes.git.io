@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+﻿import { useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ChatWindow from './ChatWindow'
 import Composer from './Composer'
@@ -51,7 +51,7 @@ export default function ChatWidget() {
       try {
         localStorage.setItem('chat_user_ready', '1')
         const n = localStorage.getItem('chat_user_name')
-        if (!n) localStorage.setItem('chat_user_name', 'Usuário')
+        if (!n) localStorage.setItem('chat_user_name', 'UsuÃ¡rio')
       } catch {}
       setUserReady(true)
     }
@@ -69,8 +69,9 @@ export default function ChatWidget() {
     return () => { sub.subscription.unsubscribe() }
   }, [])
 
-  useEffect(() => {
-    // RLS: obtain a JWT carrying visitor_id so anon can access their own rows
+    useEffect(() => {
+    let unsub: (() => void) | null = null
+    let cancelled = false
     ;(async () => {
       await ensureVisitorAuth(visitorId)
       // Ensure conversation exists and load messages
@@ -80,7 +81,7 @@ export default function ChatWidget() {
         const { data: created } = await db().from('conversations').insert([{ visitor_id: visitorId }]).select('id').single()
         cid = created?.id
       }
-      if (!cid) return
+      if (!cid || cancelled) return
       setConversationId(cid)
       if (existing?.email) setEmail(existing.email as string)
       try {
@@ -93,14 +94,12 @@ export default function ChatWidget() {
       } catch {}
 
       const { data: msgs } = await db().from('messages').select('*').eq('conversation_id', cid).order('created_at', { ascending: true })
-      setMessages((msgs as Message[]) || [])
+      if (!cancelled) setMessages((msgs as Message[]) || [])
       // Realtime: subscribe to INSERTs for this conversation
-      const unsub = subscribeToMessages(cid, (m) => setMessages((prev) => [...prev, m]))
-      return () => unsub()
+      unsub = subscribeToMessages(cid, (m) => setMessages((prev) => [...prev, m]))
     })()
-  }, [visitorId])
-
-  async function onSend(text: string, captchaToken?: string) {
+    return () => { cancelled = true; if (unsub) unsub() }
+  }, [visitorId])  async function onSend(text: string, captchaToken?: string) {
     if (!conversationId) return
     const now = Date.now()
     if (now - lastSentAt < 2000) return // rate-limit 1 msg/2s (front)
@@ -150,11 +149,11 @@ export default function ChatWidget() {
           >
             <div className="flex items-center justify-between px-3 py-2 border-b border-zinc-200 dark:border-zinc-800">
               <div className="font-medium">Fale comigo</div>
-              <button className="text-sm px-2 py-1 rounded border" onClick={() => setOpen(false)} aria-label="Minimizar chat">–</button>
+              <button className="text-sm px-2 py-1 rounded border" onClick={() => setOpen(false)} aria-label="Minimizar chat">â€“</button>
             </div>
             {!supabaseConfigured && (
               <div className="p-3 text-sm text-red-600 dark:text-red-400 border-b border-zinc-200 dark:border-zinc-800">
-                Configuração necessária: defina VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY e re‑publique.
+                ConfiguraÃ§Ã£o necessÃ¡ria: defina VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY e reâ€‘publique.
               </div>
             )}
             <div className="p-2 border-b border-zinc-200 dark:border-zinc-800 flex items-center gap-2">
@@ -218,3 +217,4 @@ export default function ChatWidget() {
     </div>
   )
 }
+
